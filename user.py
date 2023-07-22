@@ -13,9 +13,7 @@ def twitter_setup():
     # Authentication and access using keys:
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    # Return API with authentication:
-    api = tweepy.API(auth)
-    return api
+    return tweepy.API(auth)
 
 
 # We create an extractor object:
@@ -27,6 +25,6 @@ data = json_normalize(user_info._json)
 if not os.path.exists('./output/'):
     os.makedirs('./output/')
 
-data.to_csv('./output/' + user + '_info.csv')
+data.to_csv(f'./output/{user}_info.csv')
 
 

@@ -11,9 +11,7 @@ def twitter_setup():
     # Authentication and access using keys:
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    # Return API with authentication:
-    api = tweepy.API(auth)
-    return api
+    return tweepy.API(auth)
 
 
 # We create an extractor object:
@@ -21,7 +19,7 @@ extractor = twitter_setup()
 
 # We create a tweet list as follows:
 tweets = extractor.user_timeline(screen_name=user, count=200,include_rts=False)
-print("Number of tweets extracted: {}.\n".format(len(tweets)))
+print(f"Number of tweets extracted: {len(tweets)}.\n")
 
 data = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['Tweets'])
 
@@ -43,4 +41,4 @@ data['RTs']    = np.array([tweet.retweet_count for tweet in tweets])
 if not os.path.exists('./output/'):
     os.makedirs('./output/')
 
-data.to_csv('./output/' + user + '_tweets.csv')
+data.to_csv(f'./output/{user}_tweets.csv')
